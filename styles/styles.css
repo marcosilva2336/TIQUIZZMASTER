@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+
+
+body{
+  font-family: 'Rubik Glitch', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centraliza verticalmente */
+  height: 100vh;
+  text-align: center;
+  padding-top: 5%; 
+}
+.titulo {
+  font-size: 4vw;
+  font-weight: 400;
+  color: #00d300;
+  text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+}
+
+#login {
+  position: fixed;
+  top: 2%;
+  left: 2%;
+}
+
+.botao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  font-size: 1.5vw;
+  color: #00d300;
+  text-align: center;
+  padding:30px;
+  text-decoration: none;
+  background-color: black;
+  border: #00d300 5px solid;
+  font-family: 'Press Start 2P', cursive;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.btn:hover {
+  color: black;
+  transform: scale(1.2);
+  background-color: #00d300;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding-top: 10%; /* Ajusta o padding-top para centralizar melhor */
+  }
+
+  .titulo {
+    font-size: 8vw;
+  }
+
+  .btn {
+    font-size: 3vw;
+    padding: 12px 30px;
+    width: 80%; 
+    height: auto; 
+  }
+
+  #login {
+    transform: scale(0.8);
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .container {
+    padding-top: 15%;
+  }
+
+  .titulo {
+    font-size: 10vw;
+  }
+
+  .btn {
+    font-size: 4vw;
+    padding: 10px 20px;
+    width: 100%;
+  }
+
+  #login {
+    transform: scale(0.6);
+  }
+}
