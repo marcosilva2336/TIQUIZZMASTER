@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    background: #000;
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+.menu-container {
+    text-align: center;
+    color: #00FF00;
+    position: relative;
+}
+
+canvas {
+    background: black;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(1px);
+    z-index: -1;
+}
+
+.menu-title {
+    font-size: 2em;
+    margin-top: 40px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+    padding: 50px;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    font-size: 1.5vw;
+    color: #00d300;
+    text-align: center;
+    padding: 50px;
+    text-decoration: none;
+    background-color: black;
+    border: #00d300 5px solid;
+    font-family: 'Press Start 2P', cursive;
+    transition: transform 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    color: black;
+    transform: scale(1.2);
+    background-color: #00d300;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page-item {
+    margin: 0 5px;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #00d300;
+    color: black;
+    border: none;
+    font-family: 'Press Start 2P';
+    transition: transform 0.3s, background 0.3s;
+}
+
+.page-item:hover {
+    background-color: black;
+    color: #00d300;
+    transform: scale(1.1);
+}
+
+.page-item.active {
+    background-color: black;
+    color: #00d300;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: black;
+    padding: 40px;
+    border: #00d300 5px solid;
+    border-radius: 20px;
+    text-align: center;
+    color: #00FF00;
+    font-family: 'Press Start 2P';
+    position: relative;
+}
+
+.icon-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 40px;
+    background: #00d300;
+    font-size: 2em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.5s ease;
+}
+
+.icon-close:hover {
+    color: rgb(255, 0, 0);
+}
+
+.modal-content button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #00d300;
+    color: black;
+    border: none;
+    font-family: 'Press Start 2P';
+    transition: transform 0.3s, background 0.3s;
+}
+
+.modal-content p {
+    margin: 20px 0;
+}
+
+.modal-content button:hover {
+    background-color: black;
+    color: #00d300;
+    transform: scale(1.1);
+}
+
+/* Media Queries para Responsividade */
+@media screen and (max-width: 1024px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas menores */
+    }
+
+    .menu-title {
+        font-size: 1.8em; /* Ajusta o tamanho da fonte do título para telas menores */
+    }
+
+    .menu-item {
+        font-size: 2vw; /* Ajusta o tamanho da fonte para telas menores */
+        padding: 30px; /* Ajusta o padding para telas menores */
+    }
+    
+    .pagination{
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .menu-grid {
+        grid-template-columns: repeat(1, 1fr); /* Uma coluna em telas menores */
+    }
+
+    .menu-title {
+        font-size: 1.5em; /* Ajusta o tamanho da fonte do título para telas menores */
+    }
+
+    .menu-item {
+        font-size: 3vw; /* Ajusta o tamanho da fonte para telas menores */
+        padding: 20px; /* Ajusta o padding para telas menores */
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .menu-title {
+        font-size: 1.2em; /* Ajusta o tamanho da fonte do título para telas menores */
+    }
+
+    .menu-item {
+        font-size: 4vw; /* Ajusta o tamanho da fonte para telas menores */
+        padding: 15px; 
+    }
+
+   
+}

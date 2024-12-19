@@ -119,7 +119,7 @@ export default function Home() {
         <canvas id="canvas"></canvas>
 
         <div className="botao">
-          <a className="btn" href="/questions">Começar</a>
+          <a className="btn" href="/menu">Começar</a>
           <a className="btn" href="/rank">Ranking</a>
           <a className="btn" href="/credit">Créditos</a>
         </div>

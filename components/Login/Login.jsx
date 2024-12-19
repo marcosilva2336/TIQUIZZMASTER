@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { FaEnvelope, FaLock, FaTimes } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import '../../styles/login.css';
-import '../../styles/code_rain.css';
+
 
 const Login = () => {
   const [isClosing, setIsClosing] = useState(false);
