@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaArrowLeft } from 'react-icons/fa';
 import '../../styles/menu.css';
 
 const temas = [
@@ -178,6 +178,10 @@ const Menu = () => {
                     </div>
                 </div>
             )}
+
+            <a href="/" className="back-home">
+                <FaArrowLeft size={30} color="#00FF00" />
+            </a>
         </div>
     );
 };

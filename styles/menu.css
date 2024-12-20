@@ -5,11 +5,6 @@ body {
     font-family: 'Press Start 2P', sans-serif;
 }
 
-.menu-container {
-    text-align: center;
-    color: #00FF00;
-    position: relative;
-}
 
 canvas {
     background: black;
@@ -23,6 +18,20 @@ canvas {
     z-index: -1;
 }
 
+.back-home {
+    position: absolute;
+    top: 0;
+    left: 4%;
+    cursor: pointer;
+}
+
+.menu-container {
+    text-align: center;
+    color: #00FF00;
+    position: relative;
+}
+
+
 .menu-title {
     font-size: 2em;
     margin-top: 40px;
@@ -30,7 +39,7 @@ canvas {
 
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     padding: 50px;
 }
@@ -160,47 +169,57 @@ canvas {
 /* Media Queries para Responsividade */
 @media screen and (max-width: 1024px) {
     .menu-grid {
-        grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas menores */
+        grid-template-columns: repeat(2, 1fr);
+        /* Duas colunas em telas menores */
     }
 
     .menu-title {
-        font-size: 1.8em; /* Ajusta o tamanho da fonte do título para telas menores */
+        font-size: 1.8em;
+        /* Ajusta o tamanho da fonte do título para telas menores */
     }
 
     .menu-item {
-        font-size: 2vw; /* Ajusta o tamanho da fonte para telas menores */
-        padding: 30px; /* Ajusta o padding para telas menores */
+        font-size: 2vw;
+        /* Ajusta o tamanho da fonte para telas menores */
+        padding: 30px;
+        /* Ajusta o padding para telas menores */
     }
-    
-    .pagination{
+
+    .pagination {
         margin-bottom: 20px;
     }
 }
 
 @media screen and (max-width: 768px) {
     .menu-grid {
-        grid-template-columns: repeat(1, 1fr); /* Uma coluna em telas menores */
+        grid-template-columns: repeat(1, 1fr);
+        /* Uma coluna em telas menores */
     }
 
     .menu-title {
-        font-size: 1.5em; /* Ajusta o tamanho da fonte do título para telas menores */
+        font-size: 1.5em;
+        /* Ajusta o tamanho da fonte do título para telas menores */
     }
 
     .menu-item {
-        font-size: 3vw; /* Ajusta o tamanho da fonte para telas menores */
-        padding: 20px; /* Ajusta o padding para telas menores */
+        font-size: 3vw;
+        /* Ajusta o tamanho da fonte para telas menores */
+        padding: 20px;
+        /* Ajusta o padding para telas menores */
     }
 }
 
 @media screen and (max-width: 425px) {
     .menu-title {
-        font-size: 1.2em; /* Ajusta o tamanho da fonte do título para telas menores */
+        font-size: 1.2em;
+        /* Ajusta o tamanho da fonte do título para telas menores */
     }
 
     .menu-item {
-        font-size: 4vw; /* Ajusta o tamanho da fonte para telas menores */
-        padding: 15px; 
+        font-size: 4vw;
+        /* Ajusta o tamanho da fonte para telas menores */
+        padding: 15px;
     }
 
-   
+
 }
