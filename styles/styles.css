@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
 
 
-body{
+body {
   font-family: 'Rubik Glitch', sans-serif;
 }
 
@@ -10,11 +10,13 @@ body{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Centraliza verticalmente */
+  justify-content: center;
+  /* Centraliza verticalmente */
   height: 100vh;
   text-align: center;
-  padding-top: 5%; 
+  padding-top: 5%;
 }
+
 .titulo {
   font-size: 4vw;
   font-weight: 400;
@@ -22,10 +24,25 @@ body{
   text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
 }
 
-#login {
+.login {
   position: fixed;
   top: 2%;
   left: 2%;
+}
+
+.login {
+  position: fixed;
+  top: 2%;
+  left: 2%;
+}
+
+.audio-toggle {
+  position: fixed;
+  top: 2%;
+  right: 2.5%;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .botao {
@@ -43,7 +60,7 @@ body{
   font-size: 1.5vw;
   color: #00d300;
   text-align: center;
-  padding:30px;
+  padding: 30px;
   text-decoration: none;
   background-color: black;
   border: #00d300 5px solid;
@@ -60,7 +77,8 @@ body{
 
 @media screen and (max-width: 768px) {
   .container {
-    padding-top: 10%; /* Ajusta o padding-top para centralizar melhor */
+    padding-top: 10%;
+    /* Ajusta o padding-top para centralizar melhor */
   }
 
   .titulo {
@@ -70,11 +88,12 @@ body{
   .btn {
     font-size: 3vw;
     padding: 12px 30px;
-    width: 80%; 
-    height: auto; 
+    width: 80%;
+    height: auto;
   }
 
-  #login {
+  .audio-toggle,
+  .login {
     transform: scale(0.8);
   }
 }
@@ -94,7 +113,8 @@ body{
     width: 100%;
   }
 
-  #login {
+  .audio-toggle,
+  .login {
     transform: scale(0.6);
   }
 }

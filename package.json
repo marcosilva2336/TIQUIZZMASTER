@@ -11,6 +11,8 @@
   "dependencies": {
     "baffle": "^0.3.6",
     "next": "15.0.2",
+    "next-compose-plugins": "^2.2.1",
+    "next-images": "^1.8.5",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "react-icons": "^5.3.0"

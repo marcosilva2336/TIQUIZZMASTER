@@ -1,11 +1,14 @@
 "use client"
-import React, { useEffect } from 'react';
-import { FaSignInAlt } from 'react-icons/fa'; 
-import baffle from 'baffle'; 
+import React, { useEffect, useState } from 'react';
+import { FaSignInAlt, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
+import baffle from 'baffle';
 import '../../styles/styles.css';
 import '../../styles/code_rain.css';
+import { AUDIO_PATHS } from '../../constant/audio';
 
 export default function Home() {
+  const [isAudioPlaying, setIsAudioPlaying] = useState(true);
+
   useEffect(() => {
     // Inicializar baffle.js
     const text = baffle(".titulo");
@@ -112,6 +115,16 @@ export default function Home() {
     };
   }, []);
 
+  const toggleAudio = () => {
+    const audio = document.querySelector('.background-audio');
+    if (isAudioPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    setIsAudioPlaying(!isAudioPlaying);
+  };
+
   return (
     <>
       <div className="container">
@@ -123,12 +136,16 @@ export default function Home() {
           <a className="btn" href="/ranking">Ranking</a>
           <a className="btn" href="/credit">Créditos</a>
         </div>
-        <a href="/login" id="login">
-          <FaSignInAlt size={50} color="#00FF00" /> {/* Ícone de login na cor verde */}
+
+        <a href="/login" className="login">
+          <FaSignInAlt size={50} color="#00FF00" />
         </a>
-        <audio autoPlay loop>
-          {/* <source src="audio/Spektrem_Shine.mp3" /> */}
+        <audio className="background-audio" autoPlay loop>
+          <source src={AUDIO_PATHS.BACKGROUND_MUSIC} type="audio/mpeg" />
         </audio>
+        <button onClick={toggleAudio} className="audio-toggle">
+          {isAudioPlaying ? <FaVolumeUp size={50} color="#00FF00" /> : <FaVolumeMute size={50} color="#00FF00" />}
+        </button>
       </div>
     </>
   );
