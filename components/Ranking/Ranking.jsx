@@ -1,45 +1,26 @@
 "use client"
-import React, { useEffect } from 'react';
-import { FaSignInAlt } from 'react-icons/fa'; 
-import baffle from 'baffle'; 
-import '../../styles/styles.css';
-import '../../styles/code_rain.css';
+import React, { useEffect, useState } from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
+import '../../styles/ranking.css';
 
-export default function Home() {
+const Rank = () => {
+  const [difficulty, setDifficulty] = useState('TIQUIZZMASTER');
+
+  const players = [
+    { name: 'Jogador 1', score: 1000, difficulty: 'TIQUIZZMASTER' },
+    { name: 'Jogador 2', score: 900, difficulty: 'Difícil' },
+    { name: 'Jogador 3', score: 800, difficulty: 'Normal' },
+    { name: 'Jogador 4', score: 700, difficulty: 'TIQUIZZMASTER' },
+    { name: 'Jogador 5', score: 600, difficulty: 'Difícil' },
+    // Adicione mais jogadores conforme necessário
+  ];
+
+  const filteredPlayers = players
+    .filter(player => player.difficulty === difficulty)
+    .sort((a, b) => b.score - a.score)
+    .map((player, index) => ({ ...player, position: index + 1 }));
+
   useEffect(() => {
-    // Inicializar baffle.js
-    const text = baffle(".titulo");
-    text.set({
-      characters: '█/▓█ ▓█▒▒ ▓░▒ ▓▓▒▓ <▒█▒░ >█> ▓▒▓>▓ ░▓▒>/ ​​▓▓▓',
-      speed: 120
-    });
-    text.start();
-    text.reveal(2000);
-
-    const btn = baffle(".btn");
-    btn.set({
-      characters: '█/▓█ ▓█▒▒ ▓░▒ ▓▓▒▓ <▒█▒░ >█> ▓▒▓>▓ ░▓▒>/ ​​▓▓▓',
-      speed: 120
-    });
-    btn.start();
-    btn.reveal(50000);
-
-    const rank = baffle(".rank-title");
-    rank.set({
-      characters: '█/▓█ ▓█▒▒ ▓░▒ ▓▓▒▓ <▒█▒░ >█> ▓▒▓>▓ ░▓▒>/ ​​▓▓▓',
-      speed: 120
-    });
-    rank.start();
-    rank.reveal(5000);
-
-    const table = baffle("td");
-    table.set({
-      characters: '█/▓█ ▓█▒▒ ▓░▒ ▓▓▒▓ <▒█▒░ >█> ▓▒▓>▓ ░▓▒>/ ​​▓▓▓',
-      speed: 120
-    });
-    table.start();
-    table.reveal(9000);
-
     // Script para rain_code.js
     const rainCodeScript = document.createElement('script');
     rainCodeScript.innerHTML = `
@@ -113,23 +94,40 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <div className="container">
-        <h1 className="titulo">T.I QUIZZMASTER</h1>
-        <canvas id="canvas"></canvas>
-
-        <div className="botao">
-          <a className="btn" href="/menu">Começar</a>
-          <a className="btn" href="/ranking">Ranking</a>
-          <a className="btn" href="/credit">Créditos</a>
-        </div>
-        <a href="/login" id="login">
-          <FaSignInAlt size={50} color="#00FF00" /> {/* Ícone de login na cor verde */}
-        </a>
-        <audio autoPlay loop>
-          {/* <source src="audio/Spektrem_Shine.mp3" /> */}
-        </audio>
+    <div className="rank-container">
+      <canvas id="canvas"></canvas>
+      <h1 className="rank-title">Ranking de Jogadores</h1>
+      <div className="difficulty-selector">
+        <label htmlFor="difficulty">Selecione a Dificuldade:</label>
+        <select id="difficulty" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+          <option value="Normal">Normal</option>
+          <option value="Difícil">Difícil</option>
+          <option value="TIQUIZZMASTER">TIQUIZZMASTER</option>
+        </select>
       </div>
-    </>
+      <table className="rank-table">
+        <thead>
+          <tr>
+            <th>Posição</th>
+            <th>Nome</th>
+            <th>Pontuação</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredPlayers.map((player, index) => (
+            <tr key={index}>
+              <td>{player.position}</td>
+              <td>{player.name}</td>
+              <td>{player.score}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <a href="/" className="back-home">
+        <FaArrowLeft size={30} color="#00FF00" />
+      </a>
+    </div>
   );
-}
+};
+
+export default Rank;
