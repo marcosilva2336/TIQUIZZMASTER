@@ -2,11 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { FaUser, FaEnvelope, FaLock, FaTimes } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import '../../styles/cadastro.css';
-
+import API_BASE_URL from '../../constant/api';
 
 const Cadastro = () => {
   const [isClosing, setIsClosing] = useState(false);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleClose = () => {
@@ -14,6 +19,22 @@ const Cadastro = () => {
     setTimeout(() => {
       router.push('/'); 
     }, 500);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/register`, {
+        username,
+        email,
+        password
+      });
+      console.log('Usuário criado com sucesso:', response.data);
+      router.push('/login');
+    } catch (error) {
+      console.error('Erro ao criar usuário:', error.response ? error.response.data : error.message);
+      setError(error.response ? error.response.data.message : 'Erro ao criar usuário');
+    }
   };
 
   useEffect(() => {
@@ -98,28 +119,46 @@ const Cadastro = () => {
         </div>
         <div className="form-box">
           <h2 className="title">Cadastro</h2>
-          <div className="input-box">
-            <input type="text" required />
-            <label>Username</label>
-            <span className="icon">
-              <FaUser />
-            </span>
-          </div>
-          <div className="input-box">
-            <input type="email" required />
-            <label>Email</label>
-            <span className="icon">
-              <FaEnvelope />
-            </span>
-          </div>
-          <div className="input-box">
-            <input type="password" required />
-            <label>Password</label>
-            <span className="icon">
-              <FaLock />
-            </span>
-          </div>
-          <button className="button">Cadastrar</button>
+          {error && <p className="error">{error}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="input-box">
+              <input
+                type="text"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <label>Username</label>
+              <span className="icon">
+                <FaUser />
+              </span>
+            </div>
+            <div className="input-box">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label>Email</label>
+              <span className="icon">
+                <FaEnvelope />
+              </span>
+            </div>
+            <div className="input-box">
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <label>Password</label>
+              <span className="icon">
+                <FaLock />
+              </span>
+            </div>
+            <button className="button" type="submit">Cadastrar</button>
+          </form>
           <div className="login-register">
             <p>
               Já tem uma conta? <a href="/login" className="link">Login</a>

@@ -2,11 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { FaEnvelope, FaLock, FaTimes } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import '../../styles/login.css';
-
+import API_BASE_URL from '../../constant/api';
 
 const Login = () => {
   const [isClosing, setIsClosing] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleClose = () => {
@@ -14,6 +18,23 @@ const Login = () => {
     setTimeout(() => {
       router.push('/'); 
     }, 500);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
+        email,
+        password
+      });
+      console.log('Login bem-sucedido:', response.data);
+      // Armazene o token JWT no localStorage
+      localStorage.setItem('token', response.data.token);
+      router.push('/');
+    } catch (error) {
+      console.error('Erro ao fazer login:', error.response ? error.response.data : error.message);
+      setError(error.response ? error.response.data.message : 'Erro ao fazer login');
+    }
   };
 
   useEffect(() => {
@@ -98,24 +119,37 @@ const Login = () => {
         </div>
         <div className="form-box">
           <h2 className="title">Login</h2>
-          <div className="input-box">
-            <input type="text" required />
-            <label>Email</label>
-            <span className="icon">
-              <FaEnvelope />
-            </span>
-          </div>
-          <div className="input-box">
-            <input type="password" required />
-            <label>Password</label>
-            <span className="icon">
-              <FaLock />
-            </span>
-          </div>
-          <div className="remember-forgot">
-            <a href="#" className="link">Esqueceu a senha?</a>
-          </div>
-          <button className="button">Login</button>
+          {error && <p className="error">{error}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="input-box">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label>Email</label>
+              <span className="icon">
+                <FaEnvelope />
+              </span>
+            </div>
+            <div className="input-box">
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <label>Password</label>
+              <span className="icon">
+                <FaLock />
+              </span>
+            </div>
+            <div className="remember-forgot">
+              <a href="#" className="link">Esqueceu a senha?</a>
+            </div>
+            <button className="button" type="submit">Login</button>
+          </form>
           <div className="login-register">
             <p>
               Não tem uma conta? <a href="/cadastro" className="link">Registre-se</a>

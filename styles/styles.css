@@ -30,10 +30,54 @@ body {
   left: 2%;
 }
 
-.login {
+.username {
   position: fixed;
   top: 2%;
   left: 2%;
+  margin-top: 20px;
+  font-size: 20px;
+  color: #00FF00;
+  text-align: center;
+}
+
+.error {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #FF0000;
+  text-align: center;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: black;
+  border: #00d300 5px solid;
+  border-radius: 5px;
+  padding: 10px 20px;
+  text-align: center;
+  z-index: 1000;
+  width: 100%;
+  font-size: 1.5vw;
+  color: #00d300;
+  font-family: 'Press Start 2P', cursive;
+  transition: transform 0.5s ease-in-out;
+}
+
+
+.dropdown button {
+  background: none;
+  border: none;
+  color: #00FF00;
+  font-size: 16px;
+  font-family: 'Press Start 2P', cursive;
+  transition: transform 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.dropdown button:hover {
+  text-decoration: underline;
 }
 
 .audio-toggle {
@@ -74,6 +118,7 @@ body {
   transform: scale(1.2);
   background-color: #00d300;
 }
+
 
 @media screen and (max-width: 768px) {
   .container {
