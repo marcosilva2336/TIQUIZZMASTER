@@ -1,16 +1,17 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { FaEnvelope, FaLock, FaTimes } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import AuthContext from '../../context/AuthContext';
 import '../../styles/login.css';
-import API_BASE_URL from '../../constant/api';
 
 const Login = () => {
   const [isClosing, setIsClosing] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState('joao1245marcos@outlook.com');
+  const [password, setPassword] = useState('123456');
+  const { login, error, success } = useContext(AuthContext);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertColor, setAlertColor] = useState('#f44336');
   const router = useRouter();
 
   const handleClose = () => {
@@ -23,17 +24,18 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
-        email,
-        password
-      });
-      console.log('Login bem-sucedido:', response.data);
-      // Armazene o token JWT no localStorage
-      localStorage.setItem('token', response.data.token);
-      router.push('/');
+      await login(email, password);
+      setAlertColor('#00FF00'); // Cor verde para sucesso
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+        router.push('/');
+      }, 1000);
     } catch (error) {
-      console.error('Erro ao fazer login:', error.response ? error.response.data : error.message);
-      setError(error.response ? error.response.data.message : 'Erro ao fazer login');
+      console.error('Erro ao fazer login:', error.message);
+      setAlertColor('#f44336'); // Cor vermelha para erro
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 3000);
     }
   };
 
@@ -43,7 +45,7 @@ const Login = () => {
     rainCodeScript.innerHTML = `
       var canvas = document.getElementById('canvas');
       var context = canvas.getContext('2d');
-      var matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|` + "`" + `]}";
+      var matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|]}";
       matrix = matrix.split('');
 
       canvas.width = window.innerWidth;
@@ -110,16 +112,29 @@ const Login = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (success) {
+      setAlertColor('#00FF00'); // Cor verde para sucesso
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 3000);
+    }
+  }, [success]);
+
   return (
     <div className={`container ${isClosing ? 'closing' : ''}`}>
       <canvas id="canvas"></canvas>
+      {showAlert && (
+        <div className="alert" style={{ backgroundColor: alertColor }}>
+          <span className="alert-message">{error || success}</span>
+          <button className="alert-close" onClick={() => setShowAlert(false)}>X</button>
+        </div>
+      )}
       <div className="wrapper">
         <div className="icon-close" onClick={handleClose}>
           <FaTimes />
         </div>
         <div className="form-box">
           <h2 className="title">Login</h2>
-          {error && <p className="error">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div className="input-box">
               <input

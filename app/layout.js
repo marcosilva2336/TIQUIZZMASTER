@@ -1,5 +1,5 @@
-// app/layout.js
 import '../styles/globals.css';
+import { AuthProvider } from '../context/AuthContext';
 
 export default function RootLayout({ children }) {
   return (
@@ -14,7 +14,9 @@ export default function RootLayout({ children }) {
         <title>T.I QUIZZMASTER</title>
       </head>
       <body>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

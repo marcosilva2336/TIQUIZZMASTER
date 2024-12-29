@@ -188,6 +188,44 @@ canvas {
     text-decoration: underline;
 }
 
+/* Estilos para o Alerta */
+.alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    padding: 16px;
+    border-radius: 4px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: slideIn 0.5s forwards;
+  }
+  
+  .alert-message {
+    margin-right: 16px;
+  }
+  
+  .alert-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* Animação para o Alerta */
+  @keyframes slideIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 /* Media Queries para Responsividade */
 @media screen and (max-width: 768px) {
     .wrapper {

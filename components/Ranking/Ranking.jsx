@@ -1,24 +1,85 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
+import axios from 'axios';
 import '../../styles/ranking.css';
+
+const API_BASE_URL = 'http://localhost:5000'; // Atualize para o URL correto da sua API
 
 const Rank = () => {
   const [difficulty, setDifficulty] = useState('TIQUIZZMASTER');
+  const [theme, setTheme] = useState('');
+  const [players, setPlayers] = useState([]);
+  const [themes, setThemes] = useState([]);
 
-  const players = [
-    { name: 'Jogador 1', score: 1000, difficulty: 'TIQUIZZMASTER' },
-    { name: 'Jogador 2', score: 900, difficulty: 'Difícil' },
-    { name: 'Jogador 3', score: 800, difficulty: 'Normal' },
-    { name: 'Jogador 4', score: 700, difficulty: 'TIQUIZZMASTER' },
-    { name: 'Jogador 5', score: 600, difficulty: 'Difícil' },
-    // Adicione mais jogadores conforme necessário
-  ];
+  useEffect(() => {
+    const fetchThemes = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('Token não encontrado');
+        }
+        const response = await axios.get(`${API_BASE_URL}/api/themes`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setThemes(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar temas:', error);
+      }
+    };
 
-  const filteredPlayers = players
-    .filter(player => player.difficulty === difficulty)
-    .sort((a, b) => b.score - a.score)
-    .map((player, index) => ({ ...player, position: index + 1 }));
+    fetchThemes();
+  }, []);
+
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('Token não encontrado');
+        }
+        const response = await axios.get(`${API_BASE_URL}/api/scores?difficulty=${difficulty}&themeId=${theme}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log('Dados recebidos da API:', response.data); // Adicionando console.log para verificar os dados
+        const aggregatedScores = aggregateScores(response.data);
+        setPlayers(aggregatedScores);
+      } catch (error) {
+        console.error('Erro ao buscar pontuações:', error);
+      }
+    };
+
+    fetchPlayers();
+  }, [difficulty, theme]);
+
+  const aggregateScores = (scores) => {
+    const aggregated = scores.reduce((acc, score) => {
+      const key = `${score.userId._id}-${score.themeId._id}-${score.difficulty}`;
+      if (!acc[key]) {
+        acc[key] = {
+          userId: score.userId._id,
+          username: score.userId.username,
+          themeId: score.themeId._id,
+          themeName: score.themeId.name,
+          difficulty: score.difficulty,
+          totalScore: 0
+        };
+      }
+      acc[key].totalScore += score.score;
+      return acc;
+    }, {});
+
+    return Object.values(aggregated).sort((a, b) => b.totalScore - a.totalScore);
+  };
+
+  const filteredPlayers = players.map((player, index) => ({
+    ...player,
+    position: index + 1
+  }));
 
   useEffect(() => {
     // Script para rain_code.js
@@ -97,28 +158,40 @@ const Rank = () => {
     <div className="rank-container">
       <canvas id="canvas"></canvas>
       <h1 className="rank-title">Ranking de Jogadores</h1>
-      <div className="difficulty-selector">
-        <label htmlFor="difficulty">Selecione a Dificuldade:</label>
-        <select id="difficulty" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
-          <option value="Normal">Normal</option>
-          <option value="Difícil">Difícil</option>
-          <option value="TIQUIZZMASTER">TIQUIZZMASTER</option>
-        </select>
+      <div className="selectors-container">
+        <div className="difficulty-selector">
+          <label htmlFor="difficulty">Dificuldade:</label>
+          <select id="difficulty" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+            <option value="Normal">Normal</option>
+            <option value="Difícil">Difícil</option>
+            <option value="TIQUIZZMASTER">TIQUIZZMASTER</option>
+          </select>
+        </div>
+        <div className="theme-selector">
+          <label htmlFor="theme">Tema:</label>
+          <select id="theme" value={theme} onChange={(e) => setTheme(e.target.value)}>
+            {themes.map((theme) => (
+              <option key={theme._id} value={theme._id}>{theme.name}</option>
+            ))}
+          </select>
+        </div>
       </div>
       <table className="rank-table">
         <thead>
           <tr>
             <th>Posição</th>
             <th>Nome</th>
-            <th>Pontuação</th>
+            <th>Tema</th>
+            <th>Pontuação Total</th>
           </tr>
         </thead>
         <tbody>
           {filteredPlayers.map((player, index) => (
             <tr key={index}>
               <td>{player.position}</td>
-              <td>{player.name}</td>
-              <td>{player.score}</td>
+              <td>{player.username}</td>
+              <td>{player.themeName}</td>
+              <td>{player.totalScore}</td>
             </tr>
           ))}
         </tbody>

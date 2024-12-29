@@ -1,70 +1,62 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FaTimes, FaArrowLeft } from 'react-icons/fa';
+import AuthContext from '../../context/AuthContext';
+import axios from 'axios';
 import '../../styles/menu.css';
-
-const temas = [
-    // Conceitos de Programação
-    'Lógica de Programação',
-    'Estrutura de Dados',
-    'POO',
-
-    // Linguagens de Programação
-    'Python',
-    'Java',
-    'C',
-    'C#',
-    'JavaScript',
-
-    // Desenvolvimento
-    'Desenvolvimento Web',
-    'Desenvolvimento Mobile',
-
-    // Banco de Dados e Redes
-    'Banco de Dados',
-    'Redes',
-
-    // Ferramentas e Outros
-    'Git',
-    'Testes',
-
-    // Segurança da Informação
-    'Segurança da Informação',
-
-    // Inteligência Artificial
-    'I.A'
-];
+import API_BASE_URL from '../../constant/api';
+import { useRouter } from 'next/navigation';
 
 const ITEMS_PER_PAGE = 6;
 
 const Menu = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedTema, setSelectedTema] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
+  const { user, loading, isAuthenticated } = useContext(AuthContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [temas, setTemas] = useState([]);
+  const [loadingTemas, setLoadingTemas] = useState(true);
+  const router = useRouter();
 
-    const openModal = (tema) => {
-        setSelectedTema(tema);
-        setIsModalOpen(true);
-    };
+  useEffect(() => {
+    if (!loading && !isAuthenticated()) {
+      alert('Você precisa estar logado para acessar esta página.');
+      router.push('/');
+    } else if (isAuthenticated()) {
+      fetchTemas();
+    }
+  }, [loading, isAuthenticated]);
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setSelectedTema('');
-    };
+  const fetchTemas = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${API_BASE_URL}/api/themes`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setTemas(response.data);
+      setLoadingTemas(false);
+    } catch (error) {
+      console.error('Erro ao buscar temas:', error);
+      setLoadingTemas(false);
+    }
+  };
 
-    const handleDifficultySelection = (difficulty) => {
-        console.log(`Tema: ${selectedTema}, Dificuldade: ${difficulty}`);
-        closeModal();
-    };
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+  const handleTemaSelection = (temaId) => {
+    router.push(`/select-difficulty?themeId=${temaId}`);
+  };
 
-    useEffect(() => {
-        // Script para rain_code.js
-        const rainCodeScript = document.createElement('script');
-        rainCodeScript.innerHTML = `
+  useEffect(() => {
+    // Cria o elemento canvas e adiciona ao DOM
+    const canvas = document.createElement('canvas');
+    canvas.id = 'canvas';
+    document.body.appendChild(canvas);
+
+    const rainCodeScript = document.createElement('script');
+    rainCodeScript.innerHTML = `
       var canvas = document.getElementById('canvas');
       var context = canvas.getContext('2d');
       var matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|` + "`" + `]}";
@@ -126,64 +118,54 @@ const Menu = () => {
 
       var intervalId = setInterval(draw, 30);
     `;
-        document.body.appendChild(rainCodeScript);
+    document.body.appendChild(rainCodeScript);
 
-        return () => {
-            document.body.removeChild(rainCodeScript);
-            clearInterval(intervalId);
-        };
-    }, []);
+    return () => {
+      document.body.removeChild(rainCodeScript);
+      document.body.removeChild(canvas);
+      clearInterval(intervalId);
+    };
+  }, []);
 
-    // Paginação
-    const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
-    const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-    const currentItems = temas.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(temas.length / ITEMS_PER_PAGE);
+  // Paginação
+  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+  const currentItems = temas.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(temas.length / ITEMS_PER_PAGE);
 
-    return (
-        <div className="menu-container">
-            <canvas id="canvas"></canvas>
-            <h1 className="menu-title">Escolha um Tema</h1>
-            <div className="menu-grid">
-                {currentItems.map((tema, index) => (
-                    <div key={index} className="menu-item" onClick={() => openModal(tema)}>
-                        {tema}
-                    </div>
-                ))}
-            </div>
+  if (loadingTemas) {
+    return <div>Carregando...</div>;
+  }
 
-            <div className="pagination">
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index}
-                        className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
-                        onClick={() => handlePageChange(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-            </div>
+  return (
+    <div className="menu-container">
+      <canvas id="canvas"></canvas>
+      <h1 className="menu-title">Escolha um Tema</h1>
+      <div className="menu-grid">
+        {currentItems.map((tema, index) => (
+          <div key={index} className="menu-item" onClick={() => handleTemaSelection(tema._id)}>
+            {tema.name}
+          </div>
+        ))}
+      </div>
 
-            {isModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <div className="icon-close" onClick={closeModal}>
-                            <FaTimes />
-                        </div>
-                        <h2>Escolha a Dificuldade</h2>
-                        <p>Tema: {selectedTema}</p>
-                        <button onClick={() => handleDifficultySelection('Normal')}>Normal</button>
-                        <button onClick={() => handleDifficultySelection('Difícil')}>Difícil</button>
-                        <button onClick={() => handleDifficultySelection('TIQUIZZMASTER')}>TIQUIZZMASTER</button>
-                    </div>
-                </div>
-            )}
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
 
-            <a href="/" className="back-home">
-                <FaArrowLeft size={30} color="#00FF00" />
-            </a>
-        </div>
-    );
+      <a href="/" className="back-home">
+        <FaArrowLeft size={30} color="#00FF00" />
+      </a>
+    </div>
+  );
 };
 
 export default Menu;

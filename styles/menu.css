@@ -166,6 +166,7 @@ canvas {
     transform: scale(1.1);
 }
 
+
 /* Media Queries para Responsividade */
 @media screen and (max-width: 1024px) {
     .menu-grid {

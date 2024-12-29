@@ -1,17 +1,16 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FaSignInAlt, FaVolumeUp, FaVolumeMute, FaCaretDown } from 'react-icons/fa';
 import baffle from 'baffle';
-import axios from 'axios';
+import AuthContext from '../../context/AuthContext';
 import '../../styles/styles.css';
 import '../../styles/code_rain.css';
 import { AUDIO_PATHS } from '../../constant/audio';
-import API_BASE_URL from '../../constant/api';
 
 export default function Home() {
+  const { user, logout } = useContext(AuthContext);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isAudioInitialized, setIsAudioInitialized] = useState(false);
-  const [username, setUsername] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   useEffect(() => {
@@ -114,30 +113,6 @@ export default function Home() {
     `;
     document.body.appendChild(rainCodeScript);
 
-    // Buscar informações do usuário da API
-    const fetchUserData = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        return; // Não faz a requisição se o token não estiver presente
-      }
-
-      try {
-        const response = await axios.get(`${API_BASE_URL}/api/auth/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setUsername(response.data.username);
-        console.log('Nome de usuário definido:', response.data.username); // Log para verificar se o estado está sendo atualizado
-      } catch (error) {
-        console.error('Erro ao buscar informações do usuário:', error);
-        localStorage.removeItem('token'); // Remove o token inválido
-        setUsername(''); // Garante que o ícone de login será exibido
-      }
-    };
-
-    fetchUserData();
-
     return () => {
       document.body.removeChild(rainCodeScript);
       clearInterval(intervalId);
@@ -167,8 +142,8 @@ export default function Home() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setUsername('');
     setIsDropdownVisible(false);
+    logout(); // Chama a função de logout do contexto
   };
 
   return (
@@ -183,9 +158,9 @@ export default function Home() {
           <a className="btn" href="/credit">Créditos</a>
         </div>
 
-        {username ? (
+        {user ? (
           <div className="username" onClick={() => setIsDropdownVisible(!isDropdownVisible)}>
-            <span>Vamos jogar, {username}!</span>
+            <span>Vamos jogar, {user.username}!</span>
             <FaCaretDown size={20} color="#00FF00" />
             {isDropdownVisible && (
               <div className="dropdown">

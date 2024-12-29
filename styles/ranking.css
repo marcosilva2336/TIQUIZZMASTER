@@ -12,7 +12,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 10vh;
+  padding: 10vh;
 }
 
 canvas {
@@ -30,21 +30,30 @@ canvas {
 .rank-title {
   font-size: 2em;
   color: #00D300;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   letter-spacing: 4px;
 }
 
-.difficulty-selector {
+.selectors-container {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
+  gap: 20px;
+}
+
+.difficulty-selector,
+.theme-selector {
   color: #00D300;
   font-size: 1em;
 }
 
-.difficulty-selector label {
+.difficulty-selector label,
+.theme-selector label {
   margin-right: 10px;
 }
 
-.difficulty-selector select {
+.difficulty-selector select,
+.theme-selector select {
   background: black;
   color: #00D300;
   border: 2px solid #00D300;
@@ -57,9 +66,11 @@ canvas {
   max-width: 1000px;
   border-collapse: collapse;
   margin-bottom: 20px;
+  overflow-x: auto;
 }
 
-th, td {
+th,
+td {
   padding: 10px;
   font-size: 1em;
   color: #00D300;
@@ -87,15 +98,33 @@ tr {
 @media screen and (max-width: 768px) {
   .rank-title {
     font-size: 1.5em;
+    text-align: center;
   }
 
-  th, td {
+  th,
+  td {
     font-size: 0.8em;
     padding: 8px;
   }
 
   .rank-table {
     width: 90%;
+  }
+
+  .selectors-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .difficulty-selector,
+  .theme-selector {
+    width: 100%;
+    text-align: center;
+  }
+
+  .difficulty-selector select,
+  .theme-selector select {
+    width: 100%;
   }
 }
 
@@ -104,12 +133,29 @@ tr {
     font-size: 1.2em;
   }
 
-  th, td {
+  th,
+  td {
     font-size: 0.7em;
     padding: 6px;
   }
 
   .rank-table {
-    width: 95%;
+    width: 90%;
+  }
+
+  .selectors-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .difficulty-selector,
+  .theme-selector {
+    width: 100%;
+    text-align: center;
+  }
+
+  .difficulty-selector select,
+  .theme-selector select {
+    width: 100%;
   }
 }

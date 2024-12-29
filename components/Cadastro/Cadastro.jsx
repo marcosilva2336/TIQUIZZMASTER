@@ -1,10 +1,9 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FaUser, FaEnvelope, FaLock, FaTimes } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import AuthContext from '../../context/AuthContext';
 import '../../styles/cadastro.css';
-import API_BASE_URL from '../../constant/api';
 
 const Cadastro = () => {
   const [isClosing, setIsClosing] = useState(false);
@@ -12,6 +11,7 @@ const Cadastro = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { register } = useContext(AuthContext);
   const router = useRouter();
 
   const handleClose = () => {
@@ -24,16 +24,11 @@ const Cadastro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/auth/register`, {
-        username,
-        email,
-        password
-      });
-      console.log('Usuário criado com sucesso:', response.data);
-      router.push('/login');
+      await register(username, email, password);
+      router.push('/menu');
     } catch (error) {
-      console.error('Erro ao criar usuário:', error.response ? error.response.data : error.message);
-      setError(error.response ? error.response.data.message : 'Erro ao criar usuário');
+      console.error('Erro ao criar usuário:', error.message);
+      setError(error.message);
     }
   };
 

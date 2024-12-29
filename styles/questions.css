@@ -7,6 +7,57 @@ body {
     font-family: 'Press Start 2P', sans-serif;
 }
 
+.score-counter {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #00FF00;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    z-index: 1000;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: black;
+    padding: 40px;
+    border: #00d300 5px solid;
+    border-radius: 20px;
+    text-align: center;
+    color: #00FF00;
+    font-family: 'Press Start 2P';
+    position: relative;
+}
+
+.modal-button {
+    background-color: #00FF00;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    font-family: 'Press Start 2P';
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-button:hover {
+    background-color: #00d300;
+}
+
 .back-home2 {
     position: absolute;
     top: 5%;
@@ -78,7 +129,6 @@ canvas {
     background-color: black;
     border: #00d300 2px solid;
     transition: transform 0.3s ease-in-out;
-    
 }
 
 .answer {
@@ -92,6 +142,16 @@ canvas {
     color: black;
     background-color: #00d300;
     transform: scale(1.1);
+}
+
+.box.correct {
+    background-color: green;
+    color: white;
+}
+
+.box.incorrect {
+    background-color: red;
+    color: white;
 }
 
 /* Responsividade */
