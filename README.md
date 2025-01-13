@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TIQUIZZMASTER 🎯  
 
-## Getting Started
+O **TIQUIZZMASTER** é uma aplicação interativa de quiz, projetada para testar seus conhecimentos em diferentes categorias e níveis de dificuldade. Este repositório contém exclusivamente o **front-end** da aplicação, desenvolvido com **Next.js** e **React.js**.  
 
-First, run the development server:
+## 🚀 Funcionalidades  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Categorias e Níveis:** Escolha entre mais de 15 temas de conhecimento, com 3 níveis de dificuldade (fácil, médio e difícil).  
+- **Pontuação e Feedback:** Acompanhe sua pontuação e receba feedback imediato sobre suas respostas.  
+- **Ranking Global:** Veja sua posição em um ranking com outros jogadores.  
+- **Interface Responsiva:** Experiência de uso fluida e otimizada para dispositivos móveis, tablets e desktops.  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📋 Telas da Aplicação  
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Tela de Login e Cadastro:** Permite que o usuário acesse a aplicação de forma segura.  
+- **Menu Principal:** Exibe as categorias e níveis disponíveis para seleção.  
+- **Tela de Questões:** Apresenta as perguntas interativas com opções de resposta.  
+- **Ranking:** Mostra a classificação global e a pontuação dos jogadores.  
+- **Créditos:** Informações sobre os desenvolvedores e a aplicação.  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tecnologias Utilizadas  
 
-## Learn More
+- **Next.js:** Framework para desenvolvimento de aplicações web modernas e otimizadas.  
+- **React.js:** Biblioteca para criação de interfaces dinâmicas e interativas.  
+- **CSS:** Estilização customizada para uma experiência visual atraente e responsiva.  
 
-To learn more about Next.js, take a look at the following resources:
+> **Nota:** Este repositório contém apenas o front-end do projeto. O back-end, responsável pela autenticação (JWT), criptografia (bcrypt) e integração com banco de dados (MongoDB), está disponível em outro repositório.  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Como Rodar o Projeto  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Clone este repositório:  
+   ```bash  
+   git clone https://github.com/seu-usuario/tiquizzmaster.git  
