@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState, useContext } from 'react';
-import { FaTimes, FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
 import '../../styles/menu.css';

@@ -155,7 +155,7 @@ export default function Home() {
         <div className="botao">
           <a className="btn" href="/menu">Começar</a>
           <a className="btn" href="/ranking">Ranking</a>
-          <a className="btn" href="/credit">Créditos</a>
+          <a className="btn" href="/creditos">Créditos</a>
         </div>
 
         {user ? (
